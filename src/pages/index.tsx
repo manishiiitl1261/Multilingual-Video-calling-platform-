@@ -2,7 +2,9 @@ import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/Components/Navbar/Navbar";
 import Hero from "@/Components/Hero/Hero";
-// import { Hero } from "@/components/Hero/Hero";
+import Footer from "@/Components/Footer/Footer";
+// import Background from "@/Components/Background/Background";
+ 
 
 
 const geistSans = Geist({
@@ -18,8 +20,10 @@ const geistMono = Geist_Mono({
 export default function Home() {
   return (
     <>
+    {/* <Background/> */}
     <Navbar/>
     <Hero/>
+    <Footer/>
     </>
   );
 }
