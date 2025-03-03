@@ -22,7 +22,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center z-50 bg-gradient-to-b from-black to-transparent backdrop-blur-md shadow-md p-6 sm:p-10 rounded-xl  max-w-lg w-full"
+        className="text-center  bg-gradient-to-b from-black to-transparent backdrop-blur-md shadow-md p-6 sm:p-10 rounded-xl  max-w-lg w-full"
       >
         <h1 className="text-white sm:text-4xl text-2xl font-bold">
           Join or Create a Room

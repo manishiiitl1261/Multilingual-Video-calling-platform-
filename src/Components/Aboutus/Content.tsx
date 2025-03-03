@@ -55,9 +55,9 @@ export default function Content() {
   return (
     <motion.section
       ref={ref}
-      className="text-white flex justify-center items-center py-12 overflow-hidden"
+      className="text-white flex justify-center items-center py-12"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-30 sm:mx-20 mx-8 overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-30 sm:mx-20 mx-8 overflow-hidden p-4">
         {features.map((feature, index) => (
           <motion.div
             key={index}
