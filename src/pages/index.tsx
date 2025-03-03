@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/Components/Navbar/Navbar";
 import Hero from "@/Components/Hero/Hero";
 import Footer from "@/Components/Footer/Footer";
-// import Background from "@/Components/Background/Background";
- 
+// import Background from "@/Components/Background/Background"
+import Content from "@/Components/Aboutus/Content";
 
 
 const geistSans = Geist({
@@ -23,6 +23,7 @@ export default function Home() {
     {/* <Background/> */}
     <Navbar/>
     <Hero/>
+    <Content/>
     <Footer/>
     </>
   );
