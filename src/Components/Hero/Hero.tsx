@@ -10,9 +10,9 @@ export default function Hero() {
     >
       {/* Floating Image */}
       <motion.img
-        src="/assest/front_img.jpg"
+        src="/assest/gifcall.gif"
         alt="Floating Element"
-        className="w-60 sm:w-80 md:w-[50%] lg:w-[55%] xl:w-[60%] h-auto rounded-sm flex-shrink-0"
+        className="w-60 sm:w-80 md:w-[30%] lg:w-[40%] xl:w-[48%] h-auto rounded-xl flex-shrink-0"
         animate={{ y: [0, -20, 0] }}
         transition={{ repeat: Infinity, duration: 3 }}
       />

@@ -23,7 +23,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 body {
-  background-image: url('/1.jpg'); /* Place image in /public */
+  background-image: url('/assest/1.jpg'); /* Place image in /public */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
