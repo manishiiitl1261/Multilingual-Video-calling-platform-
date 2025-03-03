@@ -1,5 +1,5 @@
 import { Globe, Languages, FileText, Users, Video, Heart } from "lucide-react";
-import Card from "@/components/Aboutus/Cards";
+import Card from "@/Components/Aboutus/Cards";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -53,29 +53,55 @@ export default function Content() {
   ];
 
   return (
-    <motion.section
-      ref={ref}
-      className="text-white flex justify-center items-center py-12"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-30 sm:mx-20 mx-8 overflow-hidden p-4">
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            className="flex flex-col h-full"
-            initial={feature.animation}
-            animate={isInView ? { x: 0, y: 0, opacity: 1 } : feature.animation}
-            transition={{ duration: 1.5 }}
-          >
-            <Card
-              icon={feature.icon}
-              title={feature.title}
-              description={
-                <div className="flex-grow">{feature.description}</div>
-              }
-            />
-          </motion.div>
-        ))}
-      </div>
-    </motion.section>
+    <div className="flex flex-col items-center justify-center">
+      {/* Heading */}
+      <h2 id="ourfeature" className="text-6xl font-bold text-white text-center mt-10 relative">
+        The Magic Behind Us
+      </h2>
+
+      {/* Moving Wavy Line Animation */}
+      <motion.svg
+        className="w-[80%] max-w-[600px] mx-auto mt-2 overflow-hidden"
+        height="30"
+        viewBox="0 0 600 30"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        initial={{ x: -50 }}
+        animate={{ x: 50 }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+      >
+        <path
+          d="M0 15 Q 50 0, 100 15 T 200 15 T 300 15 T 400 15 T 500 15 T 600 15"
+          stroke="#fff"
+          strokeWidth="3"
+          fill="transparent"
+        />
+      </motion.svg>
+
+      <motion.section
+        ref={ref}
+        className="text-white flex justify-center items-center py-12"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-30 sm:mx-20 mx-8 overflow-hidden p-4">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col h-full"
+              initial={feature.animation}
+              animate={isInView ? { x: 0, y: 0, opacity: 1 } : feature.animation}
+              transition={{ duration: 1.5 }}
+            >
+              <Card
+                icon={feature.icon}
+                title={feature.title}
+                description={
+                  <div className="flex-grow">{feature.description}</div>
+                }
+              />
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+    </div>
   );
 }
