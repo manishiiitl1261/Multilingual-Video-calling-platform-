@@ -22,8 +22,8 @@ export default function Navbar() {
   const navItems: NavItem[] = [
     { href: "/", label: "Home" },
     { href: "/AboutUs", label: "About" },
-    { href: "/services", label: "Services" },
-    { href: "/contact", label: "Contact" },
+    { href: "/Services", label: "Services" },
+    { href: "/ContactUs", label: "Contact" },
   ];
 
   // Function to check if a route is active

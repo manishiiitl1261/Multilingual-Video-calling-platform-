@@ -6,7 +6,6 @@ import Content from "@/components/Aboutus/Content";
 export default function Home() {
   return (
     <>
-      {/* <Background/> */}
       <Navbar />
       <Hero />
       <Content />
