@@ -1,10 +1,8 @@
 "use client";
-
 import TeamMember from "@/Components/ContactUs/helper";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
-
 const animationVariants = {
   left: { hidden: { x: -100, opacity: 0 }, visible: { x: 0, opacity: 1 } },
   right: { hidden: { x: 100, opacity: 0 }, visible: { x: 0, opacity: 1 } },
@@ -15,7 +13,7 @@ const animationVariants = {
 const Member = () => {
   return (
     <div className="overflow-hidden gap-4 sm:gap-8 items-center pb-10 sm:pb-20 md:pb-24 lg:pb-32 pt-10">
-      <div className="text-center  italic sm:mb-20 mb-8">
+      <div className="text-center  italic sm:mb-20 mb-8 overflow-hidden">
         <h2
           id="ourfeature"
           className="text-center text-4xl sm:text-5xl lg:text-6xl italic text-white font-semibold"
@@ -48,7 +46,7 @@ const Member = () => {
         </motion.svg>
       </div>
 
-      <div className="max-w-5xl mx-auto  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 overflow-hidden">
+      <div className="max-w-5xl mx-auto  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 overflow-hidden ">
         {TeamMember.map((member, index) => (
           <motion.div
             key={index}
@@ -64,7 +62,7 @@ const Member = () => {
             className="p-8 text-center  rounded-xl  bg-gradient-to-b from-black to-transparent backdrop-blur-xl shadow-md"
           >
             {/* Member Image - Fixed rounded display */}
-            <div className="w-48 h-48 mx-auto overflow-hidden rounded-md shadow-md border-2 border-gray-200">
+            <div className="w-48 h-48 mx-auto overflow-hidden rounded-full shadow-md border-2 border-gray-200">
               <Image
                 src={member.imagePath}
                 alt={member.name}

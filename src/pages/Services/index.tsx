@@ -1,6 +1,5 @@
 import Navbar from "@/Components/Navbar/Navbar";
 import Footer from "@/Components/Footer/Footer";
-import Content from "@/Components/Aboutus/Content";
 import Services from "@/Components/Services/Services";
 export default function Home() {
   return (
@@ -13,6 +12,3 @@ export default function Home() {
     </>
   );
 }
-
-
-
