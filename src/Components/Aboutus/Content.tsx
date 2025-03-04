@@ -55,7 +55,10 @@ export default function Content() {
   return (
     <div className="flex flex-col items-center justify-center">
       {/* Heading */}
-      <h2 id="ourfeature" className="text-6xl font-bold text-white text-center mt-10 relative">
+      <h2
+        id="ourfeature"
+        className="text-center text-4xl sm:text-5xl lg:text-6xl italic text-white font-semibold"
+      >
         The Magic Behind Us
       </h2>
 
@@ -68,7 +71,12 @@ export default function Content() {
         xmlns="http://www.w3.org/2000/svg"
         initial={{ x: -50 }}
         animate={{ x: 50 }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          repeatType: "mirror",
+        }}
       >
         <path
           d="M0 15 Q 50 0, 100 15 T 200 15 T 300 15 T 400 15 T 500 15 T 600 15"
@@ -88,7 +96,9 @@ export default function Content() {
               key={index}
               className="flex flex-col h-full"
               initial={feature.animation}
-              animate={isInView ? { x: 0, y: 0, opacity: 1 } : feature.animation}
+              animate={
+                isInView ? { x: 0, y: 0, opacity: 1 } : feature.animation
+              }
               transition={{ duration: 1.5 }}
             >
               <Card
