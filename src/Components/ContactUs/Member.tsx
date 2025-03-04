@@ -12,11 +12,11 @@ const animationVariants = {
 
 const Member = () => {
   return (
-    <div className="overflow-hidden gap-4 sm:gap-8 items-center pb-10 sm:pb-20 md:pb-24 lg:pb-32 pt-10">
-      <div className="text-center  italic sm:mb-20 mb-8 overflow-hidden">
+    <div className="items-center gap-4 pt-10 pb-10 overflow-hidden sm:gap-8 sm:pb-20 md:pb-24 lg:pb-32">
+      <div className="mb-8 overflow-hidden italic text-center sm:mb-20">
         <h2
           id="ourfeature"
-          className="text-center text-4xl sm:text-5xl lg:text-6xl italic text-white font-semibold"
+          className="text-4xl italic font-semibold text-center text-white sm:text-5xl lg:text-6xl"
         >
           Our Members
         </h2>
@@ -46,7 +46,7 @@ const Member = () => {
         </motion.svg>
       </div>
 
-      <div className="max-w-5xl mx-auto  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 overflow-hidden ">
+      <div className="grid max-w-5xl grid-cols-1 gap-12 mx-auto overflow-hidden sm:grid-cols-2 lg:grid-cols-3 ">
         {TeamMember.map((member, index) => (
           <motion.div
             key={index}
@@ -59,27 +59,27 @@ const Member = () => {
               ] || animationVariants.top
             }
             transition={{ duration: 0.7 }}
-            className="p-8 text-center  rounded-xl  bg-gradient-to-b from-black to-transparent backdrop-blur-xl shadow-md"
+            className="p-8 text-center shadow-md rounded-xl bg-gradient-to-b from-black to-transparent backdrop-blur-xl"
           >
             {/* Member Image - Fixed rounded display */}
-            <div className="w-48 h-48 mx-auto overflow-hidden rounded-full shadow-md border-2 border-gray-200">
+            <div className="w-48 h-48 mx-auto overflow-hidden border-2 border-gray-200 rounded-full shadow-md">
               <Image
                 src={member.imagePath}
                 alt={member.name}
                 width={200}
                 height={200}
-                className="w-full h-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
 
             {/* Member Name & Role */}
-            <h3 className="text-xl font-semibold mt-6 text-white">
+            <h3 className="mt-6 text-xl font-semibold text-white">
               {member.name}
             </h3>
-            <p className="text-black text-lg mt-2">{member.title}</p>
+            <p className="mt-2 text-lg text-white">{member.title}</p>
 
             {/* Social Media Links */}
-            <div className="flex justify-center  space-x-6 mt-4 bg-amber-100 rounded-sm sm:rounded-2xl p-2">
+            <div className="flex justify-center p-2 mt-4 space-x-6 rounded-sm bg-amber-100 sm:rounded-2xl">
               {member.twitter && (
                 <a
                   href={member.twitter}
@@ -87,7 +87,7 @@ const Member = () => {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <FaTwitter className="text-blue-500 text-2xl group-hover:scale-125 transition-transform duration-300" />
+                  <FaTwitter className="text-2xl text-blue-500 transition-transform duration-300 group-hover:scale-125" />
                 </a>
               )}
               {member.github && (
@@ -97,7 +97,7 @@ const Member = () => {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <FaGithub className="text-gray-900 text-2xl group-hover:scale-125 transition-transform duration-300" />
+                  <FaGithub className="text-2xl text-gray-900 transition-transform duration-300 group-hover:scale-125" />
                 </a>
               )}
               {member.linkedin && (
@@ -107,7 +107,7 @@ const Member = () => {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <FaLinkedin className="text-blue-700 text-2xl group-hover:scale-125 transition-transform duration-300" />
+                  <FaLinkedin className="text-2xl text-blue-700 transition-transform duration-300 group-hover:scale-125" />
                 </a>
               )}
             </div>
