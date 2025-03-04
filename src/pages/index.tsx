@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar/Navbar";
-import Hero from "@/components/Hero/Hero";
-import Footer from "@/components/Footer/Footer";
-import Content from "@/components/Aboutus/Content";
-
+import Navbar from "@/Components/Navbar/Navbar";
+import Hero from "@/Components/Hero/Hero";
+import Footer from "@/Components/Footer/Footer";
+import Content from "@/Components/Aboutus/Content";
+import Member from "@/Components/ContactUs/Member";
 export default function Home() {
   return (
     <>
-      {/* <Background/> */}
       <Navbar />
       <Hero />
       <Content />
+      <Member />
       <Footer />
     </>
   );

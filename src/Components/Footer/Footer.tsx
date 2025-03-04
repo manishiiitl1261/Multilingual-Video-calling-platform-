@@ -9,7 +9,7 @@ export default function Footer() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="z-50 bg-gradient-to-b from-black to-transparent backdrop-blur-md shadow-md py-6 px-6 mt-10 text-white"
+      className="z-50 bg-gradient-to-b from-black to-transparent backdrop-blur-md shadow-md py-6 px-6 text-white"
     >
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         {/* Logo & About */}
