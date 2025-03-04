@@ -10,7 +10,7 @@ interface LinkType {
   href: string;
 }
 
-const ItemsContainer = (): JSX.Element => {
+const ItemsContainer = () => {
   // States for form inputs and submission notification
   const [email, setEmail] = useState<string>("");
   const [suggestion, setSuggestion] = useState<string>("");
