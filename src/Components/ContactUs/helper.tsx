@@ -1,6 +1,6 @@
 const TeamMember = [
   {
-    imagePath: "/assest/front_img.jpg",
+    imagePath: "/assest/Manish.jpeg",
     name: "Alice Johnson",
     title: "Frontend Developer",
     description: "Passionate about building amazing UIs.",
@@ -10,7 +10,7 @@ const TeamMember = [
     animation: "left",
   },
   {
-    imagePath: "/assest/front_img.jpg",
+    imagePath: "/assest/Manish.jpeg",
     name: "Bob Smith",
     title: "Backend Developer",
     description: "Loves scalable and efficient APIs.",
@@ -20,7 +20,7 @@ const TeamMember = [
     animation: "right",
   },
   {
-    imagePath: "/assest/front_img.jpg",
+    imagePath: "/assest/Manish.jpeg",
     name: "Charlie Doe",
     title: "UI/UX Designer",
     description: "Designs intuitive and modern interfaces.",
@@ -30,7 +30,7 @@ const TeamMember = [
     animation: "top",
   },
   {
-    imagePath: "/assest/front_img.jpg",
+    imagePath: "/assest/Manish.jpeg",
     name: "Bob Smith",
     title: "Backend Developer",
     description: "Loves scalable and efficient APIs.",
@@ -40,7 +40,7 @@ const TeamMember = [
     animation: "left",
   },
   {
-    imagePath: "/assest/front_img.jpg",
+    imagePath: "/assest/Manish.jpeg",
     name: "Charlie Doe",
     title: "UI/UX Designer",
     description: "Designs intuitive and modern interfaces.",
@@ -50,7 +50,7 @@ const TeamMember = [
     animation: "right",
   },
   {
-    imagePath: "/assest/front_img.jpg",
+    imagePath: "/assest/Manish.jpeg",
     name: "Charlie Doe",
     title: "UI/UX Designer",
     description: "Designs intuitive and modern interfaces.",

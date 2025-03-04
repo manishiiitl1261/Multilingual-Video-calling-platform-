@@ -53,7 +53,7 @@ export default function Content() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center overflow-hidden">
       {/* Heading */}
       <h2
         id="ourfeature"
