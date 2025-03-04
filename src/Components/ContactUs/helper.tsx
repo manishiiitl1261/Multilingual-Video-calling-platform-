@@ -10,7 +10,7 @@ const TeamMember = [
     animation: "left",
   },
   {
-    imagePath: "/assest/Manish.jpeg",
+    imagePath: "/assest/Manjeet1.jpeg",
     name: "Bob Smith",
     title: "Backend Developer",
     description: "Loves scalable and efficient APIs.",
@@ -20,7 +20,7 @@ const TeamMember = [
     animation: "right",
   },
   {
-    imagePath: "/assest/Manish.jpeg",
+    imagePath: "/assest/Astitva1.jpeg",
     name: "Charlie Doe",
     title: "UI/UX Designer",
     description: "Designs intuitive and modern interfaces.",
@@ -30,7 +30,7 @@ const TeamMember = [
     animation: "top",
   },
   {
-    imagePath: "/assest/Manish.jpeg",
+    imagePath: "/assest/Nimesh11.jpeg",
     name: "Bob Smith",
     title: "Backend Developer",
     description: "Loves scalable and efficient APIs.",
