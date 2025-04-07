@@ -92,7 +92,7 @@ Phone: ${countryCode.phoneNumber} ${formData.phoneNumber || "Not Provided"}`;
           value={formData.name}
           onChange={handleChange}
           className={`w-full p-2 border ${errors.name ? "border-red-500" : "border-gray-300"
-            } rounded`}
+            } rounded text-white placeholder:text-blue-50`}
           required
         />
         {errors.name && (
@@ -104,7 +104,7 @@ Phone: ${countryCode.phoneNumber} ${formData.phoneNumber || "Not Provided"}`;
           <select
             value={countryCode.whatsappNumber}
             onChange={(e) => handleCountryCodeChange(e, "whatsappNumber")}
-            className="border border-gray-300 rounded p-2"
+            className="border border-gray-300 rounded p-2 text-white placeholder:text-blue-50"
           >
             <option value="+91" className=" bg-gray-800">+91 (IND)</option>
             <option value="+1" className=" bg-gray-800">+1 (USA)</option>
@@ -116,7 +116,7 @@ Phone: ${countryCode.phoneNumber} ${formData.phoneNumber || "Not Provided"}`;
             placeholder="WhatsApp Number"
             value={formData.whatsappNumber}
             onChange={handleChange}
-            className={`w-full p-2 border ${errors.whatsappNumber ? "border-red-500" : "border-gray-300"
+            className={`w-full p-2 border ${errors.whatsappNumber ? "border-red-500" : "border-gray-300 text-white placeholder:text-blue-50"
               } rounded`}
           />
         </div>
@@ -129,7 +129,7 @@ Phone: ${countryCode.phoneNumber} ${formData.phoneNumber || "Not Provided"}`;
           <select
             value={countryCode.phoneNumber}
             onChange={(e) => handleCountryCodeChange(e, "phoneNumber")}
-            className="border border-gray-300 rounded p-2"
+            className="border border-gray-300 rounded p-2 text-white placeholder:text-blue-50"
           >
             <option value="+91" className=" bg-gray-800">+91 (IND)</option>
             <option value="+1" className=" bg-gray-800">+1 (USA)</option>
@@ -140,7 +140,7 @@ Phone: ${countryCode.phoneNumber} ${formData.phoneNumber || "Not Provided"}`;
             placeholder="Phone Number (Optional)"
             value={formData.phoneNumber}
             onChange={handleChange}
-            className={`w-full p-2 border ${errors.phoneNumber ? "border-red-500" : "border-gray-300"
+            className={`w-full p-2 border ${errors.phoneNumber ? "border-red-500" : "border-gray-300 text-white placeholder:text-blue-50"
               } rounded`}
           />
         </div>
@@ -170,7 +170,7 @@ Phone: ${countryCode.phoneNumber} ${formData.phoneNumber || "Not Provided"}`;
           value={formData.message}
           onChange={handleChange}
           className={`w-full p-2 border ${errors.message ? "border-red-500" : "border-gray-300"
-            } rounded`}
+            } rounded text-white placeholder:text-blue-50`}
           required
         ></textarea>
         {errors.message && (
