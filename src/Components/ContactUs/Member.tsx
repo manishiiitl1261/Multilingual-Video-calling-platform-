@@ -46,7 +46,7 @@ const Member = () => {
         </motion.svg>
       </div>
 
-      <div className="grid max-w-5xl grid-cols-1 gap-12 mx-auto overflow-hidden sm:grid-cols-2 lg:grid-cols-3 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-30 sm:mx-20 mx-8 overflow-hidden p-4">
         {TeamMember.map((member, index) => (
           <motion.div
             key={index}

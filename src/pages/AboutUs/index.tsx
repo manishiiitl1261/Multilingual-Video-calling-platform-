@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className=" mt-10 sm:mt-30">
+      <main className=" mt-20 sm:mt-30">
         <Content />
       </main>
       <Footer />
