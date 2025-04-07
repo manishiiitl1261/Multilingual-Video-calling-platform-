@@ -79,13 +79,13 @@ const Member = () => {
             <p className="mt-2 text-lg text-white">{member.title}</p>
 
             {/* Social Media Links */}
-            <div className="flex justify-center p-2 mt-4 space-x-6 rounded-sm bg-amber-100 sm:rounded-2xl">
+            <div className="flex justify-center p-2 mt-4 space-x-6 rounded-sm  sm:rounded-2xl">
               {member.twitter && (
                 <a
                   href={member.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
+                  className="group rounded-full bg-amber-100 p-2"
                 >
                   <FaTwitter className="text-2xl text-blue-500 transition-transform duration-300 group-hover:scale-125" />
                 </a>
@@ -95,7 +95,7 @@ const Member = () => {
                   href={member.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
+                  className="group rounded-full bg-amber-100 p-2"
                 >
                   <FaGithub className="text-2xl text-gray-900 transition-transform duration-300 group-hover:scale-125" />
                 </a>
@@ -105,7 +105,7 @@ const Member = () => {
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
+                  className="group rounded-full bg-amber-100 p-2"
                 >
                   <FaLinkedin className="text-2xl text-blue-700 transition-transform duration-300 group-hover:scale-125" />
                 </a>
