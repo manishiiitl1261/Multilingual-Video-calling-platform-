@@ -23,7 +23,7 @@ export default function Contact() {
                     id="ourfeature"
                     className="text-4xl italic font-semibold text-center text-white sm:text-5xl lg:text-6xl"
                 >
-                    Our Members
+                    Contact Us
                 </h2>
 
                 {/* Moving Wavy Line Animation */}

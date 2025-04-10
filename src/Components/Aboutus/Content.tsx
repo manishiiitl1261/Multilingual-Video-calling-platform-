@@ -1,3 +1,5 @@
+"use client";
+
 import { Globe, Languages, FileText, Users, Video, Heart } from "lucide-react";
 import Card from "@/Components/Aboutus/Cards";
 import { motion, useInView } from "framer-motion";
@@ -9,42 +11,42 @@ export default function Content() {
 
   const features = [
     {
-      icon: <Globe className="text-purple-400" />,
+      icon: <Globe className="text-black bg-amber-100 rounded-sm" />,
       title: "Multilingual Meeting Support",
       description:
         "Our app allows users who speak different languages to communicate with each other. The app translates the text and speaks it out to other participants in the language they have selected.",
       animation: { x: -100, opacity: 0 },
     },
     {
-      icon: <Languages className="text-purple-400" />,
+      icon: <Languages className="text-black bg-amber-100 rounded-sm" />,
       title: "Real-time Translation",
       description:
         "Our app provides real-time translation, so you can focus on the conversation without worrying about the language barrier. The translation is done quickly and accurately, ensuring smooth communication.",
       animation: { x: 100, opacity: 0 },
     },
     {
-      icon: <FileText className="text-purple-400" />,
+      icon: <FileText className="text-black bg-amber-100 rounded-sm" />,
       title: "Meeting Minutes",
       description:
         "Our app automatically generates a summary of the entire meeting or conference. This feature saves time and helps ensure that all participants are on the same page.",
       animation: { y: -100, opacity: 0 },
     },
     {
-      icon: <Users className="text-purple-400" />,
+      icon: <Users className="text-black bg-amber-100 rounded-sm" />,
       title: "Large Capacity",
       description:
         "Our app can support up to 100 concurrent users. This means that even large meetings and conferences can be easily accommodated, making it ideal for businesses, schools, and other organizations.",
       animation: { y: 100, opacity: 0 },
     },
     {
-      icon: <Video className="text-purple-400" />,
+      icon: <Video className="text-black bg-amber-100 rounded-sm" />,
       title: "HQ Video and Screen Sharing",
       description:
         "Our app provides high-quality video and screen sharing, ensuring that everyone can see and hear each other clearly. This feature helps to ensure that the meeting is productive and engaging.",
       animation: { x: -100, opacity: 0 },
     },
     {
-      icon: <Heart className="text-purple-400" />,
+      icon: <Heart className="text-black bg-amber-100 rounded-sm" />,
       title: "User-Friendly Interface",
       description:
         "Our app has a user-friendly interface that is easy to navigate. This ensures that everyone can participate in the meeting or conference without any technical difficulties, making it ideal for users of all skill levels.",
@@ -62,7 +64,7 @@ export default function Content() {
         The Magic Behind Us
       </h2>
 
-      {/* Moving Wavy Line Animation */}
+      {/* Wavy Line Animation */}
       <motion.svg
         className="w-[80%] max-w-[600px] mx-auto mt-2 overflow-hidden"
         height="30"
@@ -77,6 +79,7 @@ export default function Content() {
           ease: "easeInOut",
           repeatType: "mirror",
         }}
+        aria-hidden="true"
       >
         <path
           d="M0 15 Q 50 0, 100 15 T 200 15 T 300 15 T 400 15 T 500 15 T 600 15"
@@ -86,11 +89,13 @@ export default function Content() {
         />
       </motion.svg>
 
+      {/* Feature Cards */}
       <motion.section
         ref={ref}
-        className="text-white flex justify-center items-center py-12"
+        className="text-white flex justify-center items-center py-12 w-full"
+        aria-labelledby="ourfeature"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-30 sm:mx-20 mx-8 overflow-hidden p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-4 sm:mx-12 md:mx-20 lg:mx-32 p-4">
           {features.map((feature, index) => (
             <motion.div
               key={index}

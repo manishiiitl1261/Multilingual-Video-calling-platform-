@@ -24,6 +24,7 @@ export default function Navbar() {
     { href: "/AboutUs", label: "About" },
     { href: "/Services", label: "Services" },
     { href: "/ContactUs", label: "Contact" },
+    { href: "/Login", label: "Log In" },
   ];
 
   // Function to check if a route is active

@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-   
-
-
-
-
 const SignUp = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -130,7 +125,7 @@ const SignUp = () => {
 
         <p className="mt-4 text-sm text-center text-gray-500">
           Already have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
+          <a href="/Login" className="text-blue-500 hover:underline">
             Sign In
           </a>
         </p>
