@@ -1,21 +1,14 @@
-// import Navbar from "@/Components/Navbar/Navbar";
-
-// import ItemsContainer from "@/Components/ContactUs/ItemContainer";
-// import Member from "@/Components/ContactUs/Member";
-// import Contact from "@/Components/ContactUs/Contact";
-import SignUp from "@/Components/SignUp/signup"
+import SignUp from "@/Components/Login/signup";
+import Navbar from "@/Components/Navbar/Navbar";
+import Footer from "@/Components/Footer/Footer";
 export default function Home() {
   return (
     <>
-      {/* <Navbar />
-      <main className="mt-20 sm:mt-30">
-        <Contact />
-        <Member />
+      <Navbar />
+      <main className="mt-2 sm:mt-6 lg:mt-8">
+        <SignUp />
       </main>
-      <ItemsContainer /> */
-          
-          }
-          <SignUp/>
+      <Footer />
     </>
   );
 }

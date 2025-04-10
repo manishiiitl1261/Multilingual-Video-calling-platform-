@@ -5,12 +5,6 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-   
-    
-    
-    
-    
-    
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -122,7 +116,7 @@ const LoginPage = () => {
 
         <p className="mt-4 text-sm text-center text-gray-600">
           Don't have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
+          <a href="/SignUp" className="text-blue-500 hover:underline">
             Register
           </a>
         </p>

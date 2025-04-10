@@ -30,13 +30,13 @@ const TeamMember = [
     animation: "top",
   },
   {
-    imagePath: "/assest/Nimesh11.jpeg",
-    name: "Nimesh Dutt",
-    title: "Backend Developer",
+    imagePath: "/assest/Manjeet1.jpeg",
+    name: "Manjeet Kumar",
+    title: <span style={{ color: "white" }}>Backend-Developer</span>,
     description: "Loves scalable and efficient APIs.",
     twitter: "https://twitter.com/bob",
-    github: "https://github.com/Nimeshdutt?tab=repositories",
-    linkedin: "https://www.linkedin.com/in/nimesh-dutt-26948b216/",
+    github: "https://github.com/manjeetkumar29",
+    linkedin: "https://www.linkedin.com/in/manjeet-kumar-10a78b259/",
     animation: "left",
   },
   {
@@ -47,19 +47,18 @@ const TeamMember = [
     twitter: "https://twitter.com/charlie",
     github: "https://github.com/Nimeshdutt?tab=repositories",
     linkedin: "https://www.linkedin.com/in/nimesh-dutt-26948b216/",
-    animation: "right",
+    animation: "top",
   },
   {
-    imagePath: "/assest/Nimesh11.jpeg",
-    name: "Nimesh Dutt",
-    title: <span style={{ color: "white" }}>Backend Developer</span>,
-    description: "Designs intuitive and modern interfaces.",
-    twitter: "https://twitter.com/charlie",
-    github: "https://github.com/Nimeshdutt?tab=repositories",
-    linkedin: "https://www.linkedin.com/in/nimesh-dutt-26948b216/",
-    animation: "center",
+    imagePath: "/assest/Manish.jpeg",
+    name: "Manish Rawat",
+    title: <span style={{ color: "white" }}>Frontend-Developer</span>,
+    description: "Passionate about building amazing UIs.",
+    twitter: "https://twitter.com/alice",
+    github: "https://github.com/manishiiitl1261",
+    linkedin: "https://www.linkedin.com/in/manish-rawat-b11960258",
+    animation: "right",
   },
 ];
 
 export default TeamMember;
- 
