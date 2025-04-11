@@ -1,4 +1,4 @@
-import LogIn from "@/Components/Login/login";
+import LogIn from "@/Components/Login/login.jsx";
 import Navbar from "@/Components/Navbar/Navbar";
 import Footer from "@/Components/Footer/Footer";
 export default function Home() {
