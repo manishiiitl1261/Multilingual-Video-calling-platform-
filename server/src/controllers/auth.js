@@ -443,62 +443,67 @@ exports.forgotPassword = async (req, res) => {
         // Check if user exists
         const user = await User.findOne({ email });
 
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found'
-            });
-        }
+        // For security, don't reveal if user exists or not
+        // Just proceed if user exists, return same response either way
+        if (user) {
+            // Generate reset token
+            const resetToken = crypto.randomBytes(20).toString('hex');
 
-        // Generate reset token
-        const resetToken = crypto.randomBytes(20).toString('hex');
+            // Hash token and set to resetPasswordToken field
+            user.resetPasswordToken = crypto
+                .createHash('sha256')
+                .update(resetToken)
+                .digest('hex');
 
-        // Hash token and set to resetPasswordToken field
-        user.resetPasswordToken = crypto
-            .createHash('sha256')
-            .update(resetToken)
-            .digest('hex');
+            // Set token expiration (10 minutes)
+            user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
-        // Set token expiration (10 minutes)
-        user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
-
-        await user.save();
-
-        // Create reset url
-        const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
-
-        // Create email message
-        const message = `
-            <h1>Password Reset Request</h1>
-            <p>Hello ${user.name},</p>
-            <p>You requested a password reset. Please click the link below to reset your password:</p>
-            <a href="${resetUrl}" style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">Reset Password</a>
-            <p>This link will expire in 10 minutes.</p>
-            <p>If you didn't request this, please ignore this email and your password will remain unchanged.</p>
-            <p>Regards,<br>Clarity Connect Team</p>
-        `;
-
-        let emailSent = true;
-        try {
-            await sendEmail({
-                to: user.email,
-                subject: 'Password Reset - Clarity Connect',
-                text: message
-            });
-        } catch (error) {
-            console.error('Failed to send password reset email:', error);
-            emailSent = false;
-            
-            // Remove reset tokens if email fails
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpire = undefined;
             await user.save();
+
+            // Create reset url
+            const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+
+            // Create email message
+            const message = `
+                <h1>Password Reset Request</h1>
+                <p>Hello ${user.name},</p>
+                <p>You requested a password reset. Please click the link below to reset your password:</p>
+                <a href="${resetUrl}" style="display: inline-block; padding: 10px 20px; background-color: #6b46c1; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">Reset Password</a>
+                <p>This link will expire in 10 minutes.</p>
+                <p>If you didn't request this, please ignore this email and your password will remain unchanged.</p>
+                <p>Regards,<br>Clarity Connect Team</p>
+            `;
+
+            let emailSent = true;
+            try {
+                await sendEmail({
+                    to: user.email,
+                    subject: 'Password Reset - Clarity Connect',
+                    text: message
+                });
+            } catch (error) {
+                console.error('Failed to send password reset email:', error);
+                emailSent = false;
+                
+                // Remove reset tokens if email fails
+                user.resetPasswordToken = undefined;
+                user.resetPasswordExpire = undefined;
+                await user.save();
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: 'Password reset email sent',
+                emailSent
+            });
         }
 
-        res.status(200).json({
+        // If user doesn't exist, return success but with emailSent = false
+        // This way we don't leak info about which emails exist in our database
+        return res.status(200).json({
             success: true,
-            message: 'Password reset email sent',
-            emailSent
+            message: 'If your email exists in our system, you will receive a password reset link',
+            emailSent: false
         });
     } catch (error) {
         console.error('Forgot password error:', error);
@@ -533,6 +538,21 @@ exports.resetPassword = async (req, res) => {
             });
         }
 
+        // Validate password
+        if (!req.body.password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password is required'
+            });
+        }
+
+        if (req.body.password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password must be at least 6 characters long'
+            });
+        }
+
         // Set new password
         user.password = req.body.password;
         user.resetPasswordToken = undefined;
@@ -560,15 +580,15 @@ exports.resetPassword = async (req, res) => {
             // Continue anyway, as the password has been reset
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: 'Password reset successful'
         });
     } catch (error) {
         console.error('Reset password error:', error);
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            message: 'Server error'
+            message: error.message || 'Server error'
         });
     }
 }; 

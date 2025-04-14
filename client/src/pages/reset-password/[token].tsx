@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { resetPassword } from '@/lib/api';
 import Navbar from "@/Components/Navbar/Navbar";
@@ -13,6 +13,17 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+
+  // Handle automatic redirect
+  useEffect(() => {
+    if (success && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (success && countdown === 0) {
+      navigateToLogin();
+    }
+  }, [success, countdown]);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -24,6 +35,10 @@ export default function ResetPasswordPage() {
       return pathArray[pathArray.length - 1];
     }
     return '';
+  };
+
+  const navigateToLogin = () => {
+    router.push('/Login');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,9 +79,10 @@ export default function ResetPasswordPage() {
       await resetPassword(resetToken, password);
       setSuccess('Your password has been reset successfully. You can now login with your new password.');
       
-      // Clear form
+      // Clear form and start countdown
       setPassword('');
       setConfirmPassword('');
+      setCountdown(5);
     } catch (error: any) {
       console.error('Password reset error:', error);
       setError(error.message || 'Failed to reset password. The link may be invalid or expired.');
@@ -95,9 +111,12 @@ export default function ResetPasswordPage() {
               <div className="mb-6 bg-green-100 text-green-700 p-3 rounded">
                 <p>{success}</p>
                 <p className="mt-2">
-                  <Link href="/login" className="text-green-600 font-medium hover:underline">
-                    Go to Login
-                  </Link>
+                  <button 
+                    onClick={navigateToLogin}
+                    className="text-green-600 font-medium hover:underline"
+                  >
+                    Go to Login {countdown > 0 && `(auto-redirect in ${countdown}s)`}
+                  </button>
                 </p>
               </div>
             )}
@@ -152,12 +171,13 @@ export default function ResetPasswordPage() {
                 </div>
                 
                 <div className="flex justify-between">
-                  <Link
-                    href="/login"
+                  <button
+                    type="button"
+                    onClick={navigateToLogin}
                     className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors inline-flex items-center"
                   >
                     Back to Login
-                  </Link>
+                  </button>
                   <button
                     type="submit"
                     disabled={isLoading}

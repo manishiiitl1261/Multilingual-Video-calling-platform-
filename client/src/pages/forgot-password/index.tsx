@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { forgotPassword } from '@/lib/api';
 import Navbar from "@/Components/Navbar/Navbar";
 import Footer from "@/Components/Footer/Footer";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function ForgotPasswordPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+
+  // Handle auto-redirect after success
+  useEffect(() => {
+    if (success && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (success && countdown === 0) {
+      navigateToLogin();
+    }
+  }, [success, countdown]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,13 +45,21 @@ export default function ForgotPasswordPage() {
       } else {
         setSuccess('If your email exists in our system, you will receive a password reset link');
       }
+      // Start countdown for auto-redirect
+      setCountdown(5);
     } catch (error) {
       // Don't show specific errors to prevent email enumeration
       console.error('Forgot password error:', error);
       setSuccess('If your email exists in our system, you will receive a password reset link');
+      // Start countdown for auto-redirect
+      setCountdown(5);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const navigateToLogin = () => {
+    router.push('/Login');
   };
 
   return (
@@ -61,9 +82,12 @@ export default function ForgotPasswordPage() {
               <div className="mb-6 bg-green-100 text-green-700 p-3 rounded">
                 <p>{success}</p>
                 <p className="mt-2">
-                  <Link href="/login" className="text-green-600 font-medium hover:underline">
-                    Return to login
-                  </Link>
+                  <button 
+                    onClick={navigateToLogin}
+                    className="text-green-600 font-medium hover:underline"
+                  >
+                    Return to login {countdown > 0 && `(auto-redirect in ${countdown}s)`}
+                  </button>
                 </p>
               </div>
             )}
@@ -89,12 +113,13 @@ export default function ForgotPasswordPage() {
                 </div>
                 
                 <div className="flex justify-between">
-                  <Link
-                    href="/login"
+                  <button
+                    type="button"
+                    onClick={navigateToLogin}
                     className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors inline-flex items-center"
                   >
                     Back to Login
-                  </Link>
+                  </button>
                   <button
                     type="submit"
                     disabled={isLoading}
