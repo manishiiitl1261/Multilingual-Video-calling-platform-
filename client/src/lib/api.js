@@ -66,28 +66,64 @@ export const sendLoginOTP = async (email) => {
 
 // Forgot password request
 export const forgotPassword = async (email) => {
-  const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  });
-  
-  return handleResponse(response);
+  try {
+    const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+    
+    const data = await response.json();
+    
+    // Even if user not found, return a successful response for security
+    if (response.status === 404) {
+      return {
+        success: true,
+        emailSent: false,
+        message: 'If your email exists in our system, you will receive a password reset link'
+      };
+    }
+    
+    if (!response.ok) {
+      throw new Error(data.message || response.statusText);
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Forgot password API error:', error);
+    // Return a generic success message for security (prevents email enumeration)
+    return {
+      success: true,
+      emailSent: false,
+      message: 'If your email exists in our system, you will receive a password reset link'
+    };
+  }
 };
 
 // Reset password with token
 export const resetPassword = async (resetToken, password) => {
-  const response = await fetch(`${API_URL}/api/auth/reset-password/${resetToken}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ password }),
-  });
-  
-  return handleResponse(response);
+  try {
+    const response = await fetch(`${API_URL}/api/auth/reset-password/${resetToken}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password }),
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to reset password');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Reset password API error:', error);
+    throw error;
+  }
 };
 
 // Get user profile
