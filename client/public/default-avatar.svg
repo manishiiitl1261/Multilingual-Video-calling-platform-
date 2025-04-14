@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="100" fill="#E2E8F0"/>
+  <!-- Head -->
+  <circle cx="100" cy="85" r="40" fill="#A855F7"/>
+  <!-- Body -->
+  <path d="M100,125 C65,125 40,150 40,190 L160,190 C160,150 135,125 100,125" fill="#A855F7"/>
+</svg> 
