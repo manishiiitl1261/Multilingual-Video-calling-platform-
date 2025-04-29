@@ -14,12 +14,14 @@ A full-stack application that provides multilingual video calling capabilities w
 ## Tech Stack
 
 ### Frontend
+
 - Next.js
 - React
 - Tailwind CSS
 - TypeScript
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -29,17 +31,21 @@ A full-stack application that provides multilingual video calling capabilities w
 ## Setup Instructions
 
 ### Prerequisites
+
 - Node.js
 - MongoDB
 - Gmail account for sending OTPs
 
 ### MongoDB Setup
+
 1. Install MongoDB (if not already installed):
+
    - **Windows**: Download and install MongoDB Community Server from the [official website](https://www.mongodb.com/try/download/community)
    - **macOS**: `brew tap mongodb/brew && brew install mongodb-community`
    - **Linux**: Follow the [MongoDB installation guide](https://docs.mongodb.com/manual/administration/install-on-linux/)
 
 2. Start MongoDB:
+
    - **Windows**: MongoDB should start as a service automatically
    - **macOS/Linux**: `brew services start mongodb-community` or `sudo systemctl start mongod`
 
@@ -47,13 +53,16 @@ A full-stack application that provides multilingual video calling capabilities w
    - Open a terminal and run `mongo` or `mongosh` to connect to the database
 
 ### Gmail Setup for OTP
+
 1. Create or use an existing Gmail account
 2. Enable 2-Step Verification:
+
    - Go to your Google Account settings
    - Select Security
    - Under "Signing in to Google," select 2-Step Verification and turn it on
 
 3. Create an App Password:
+
    - After enabling 2-Step Verification, go back to the Security page
    - Under "Signing in to Google," select App passwords
    - Select "Mail" as the app and "Other" as the device (give it a name like "Clarity Connect")
@@ -69,17 +78,21 @@ A full-stack application that provides multilingual video calling capabilities w
    ```
 
 ### Backend Setup
+
 1. Navigate to the server directory:
+
    ```
    cd Multilingual-Video-calling-platform-/server
    ```
 
 2. Install dependencies:
+
    ```
    npm install
    ```
 
 3. Configure environment variables:
+
    - Edit the `.env` file with your MongoDB URI, JWT secret, and email credentials from Gmail setup above
 
 4. Start the server:
@@ -88,20 +101,25 @@ A full-stack application that provides multilingual video calling capabilities w
    ```
 
 ### Frontend Setup
+
 1. Navigate to the client directory:
+
    ```
    cd Multilingual-Video-calling-platform-/client
    ```
 
 2. Install dependencies:
+
    ```
    npm install
    ```
 
 3. Configure environment variables:
+
    - Create/edit `.env.local` with: `NEXT_PUBLIC_API_URL=http://localhost:5000`
 
 4. Start the development server:
+
    ```
    npm run dev
    ```
@@ -111,12 +129,15 @@ A full-stack application that provides multilingual video calling capabilities w
 ## Troubleshooting
 
 ### MongoDB Connection Issues
+
 - Ensure MongoDB is running on your system
 - Check if the MongoDB connection string in `.env` is correct
 - If using MongoDB Atlas, ensure your IP is whitelisted
 
 ### Email OTP Issues
+
 - **If OTPs are not being received:**
+
   - Check server console for email error messages
   - Verify your Gmail account settings (2FA and App Password are properly set up)
   - Ensure the EMAIL_PASSWORD in `.env` is the App Password, not your regular Gmail password
@@ -124,6 +145,7 @@ A full-stack application that provides multilingual video calling capabilities w
   - The application will display the OTP on-screen if email sending fails in development mode
 
 - **Gmail App Password tips:**
+
   - App passwords are 16 characters long with no spaces
   - If you're getting authentication errors, regenerate a new App Password
   - Make sure 2-Step Verification is still enabled on your Google account
@@ -144,6 +166,7 @@ A full-stack application that provides multilingual video calling capabilities w
 ## API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - Register a new user
 - `POST /api/auth/verify-otp` - Verify email OTP
 - `POST /api/auth/login` - Login user
@@ -153,4 +176,5 @@ A full-stack application that provides multilingual video calling capabilities w
 - `GET /api/auth/logout` - Logout user
 
 ## License
-This project is licensed under the MIT License. 
+
+This project is licensed under the MIT License.
