@@ -30,7 +30,7 @@ const Subtitles: React.FC<SubtitlesProps> = ({
   // Filter and limit the number of subtitles to show
   useEffect(() => {
     // Only show final subtitles, or the most recent non-final one
-    let finalSubtitles = subtitles
+    const finalSubtitles = subtitles
       .filter((s) => s.isFinal)
       .slice(-maxItems + 1);
     const nonFinalSubtitle = subtitles.find((s) => !s.isFinal);
@@ -91,7 +91,7 @@ const Subtitles: React.FC<SubtitlesProps> = ({
     <div
       ref={containerRef}
       className={`
-        ${position === "bottom" ? "bottom-0" : "top-0"}
+        ${position === "bottom" ? "bottom-14" : "top-0"}
         fixed left-0 right-0 z-10 px-4 py-2 pointer-events-none
         flex flex-col ${position === "bottom" ? "justify-end" : "justify-start"}
         max-h-48 overflow-y-auto scrollbar-hide

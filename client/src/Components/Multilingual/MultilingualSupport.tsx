@@ -24,6 +24,11 @@ interface TranscriptMessage {
   timestamp: Date;
 }
 
+// Add types for LiveKit track events
+interface TrackPublication {
+  kind: string;
+}
+
 const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
   room,
   localParticipant,
@@ -41,9 +46,6 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
 
   // Current subtitles to display
   const [subtitles, setSubtitles] = useState<SubtitleItem[]>([]);
-
-  // Store incoming transcripts
-  const [transcripts, setTranscripts] = useState<TranscriptMessage[]>([]);
 
   // Services
   const speechRecognition = useRef<SpeechRecognitionService | null>(null);
@@ -73,14 +75,14 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
     setIsMicrophoneEnabled(localParticipant.isMicrophoneEnabled);
 
     // Define handlers outside to use in both add and remove
-    const handleTrackMuted = (pub: any) => {
+    const handleTrackMuted = (pub: TrackPublication) => {
       if (pub.kind === "audio") {
         console.log("LiveKit microphone disabled");
         setIsMicrophoneEnabled(false);
       }
     };
 
-    const handleTrackUnmuted = (pub: any) => {
+    const handleTrackUnmuted = (pub: TrackPublication) => {
       if (pub.kind === "audio") {
         console.log("LiveKit microphone enabled");
         setIsMicrophoneEnabled(true);
@@ -136,29 +138,15 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
   // Process received transcripts and translate if needed
   const handleTranscriptReceived = useCallback(
     async (transcript: TranscriptMessage) => {
-      // Don't skip processing transcripts from others when our microphone is off
-      // We process all received transcripts regardless of mic status
-      setTranscripts((prev) => {
-        // Update existing transcript if it has the same ID, otherwise add new
-        const exists = prev.some((t) => t.id === transcript.id);
-        if (exists) {
-          return prev.map((t) => (t.id === transcript.id ? transcript : t));
-        } else {
-          return [...prev, transcript];
-        }
-      });
-
-      // Always translate if translation service is available, regardless of source language
+      // Always translate if translation service is available
       if (translationService.current) {
         try {
-          // Even if languages are the same, use translate method which handles this case
           const result = await translationService.current.translate(
             transcript.text,
             transcript.senderLanguage,
             preferredLanguage
           );
 
-          // Add to subtitles
           const subtitleItem: SubtitleItem = {
             id: transcript.id,
             speakerName: transcript.senderName,
@@ -172,20 +160,13 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
           };
 
           setSubtitles((prev) => {
-            // Update existing subtitle if it has the same ID, otherwise add new
             const exists = prev.some((s) => s.id === subtitleItem.id);
-            if (exists) {
-              return prev.map((s) =>
-                s.id === subtitleItem.id ? subtitleItem : s
-              );
-            } else {
-              return [...prev, subtitleItem];
-            }
+            return exists
+              ? prev.map((s) => (s.id === subtitleItem.id ? subtitleItem : s))
+              : [...prev, subtitleItem];
           });
         } catch (error) {
           console.error("Translation error:", error);
-
-          // In case of translation error, fall back to original text
           const subtitleItem: SubtitleItem = {
             id: transcript.id,
             speakerName: transcript.senderName,
@@ -193,20 +174,16 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
               ISO6391.getName(transcript.senderLanguage) ||
               transcript.senderLanguage,
             originalText: transcript.text,
-            translatedText: transcript.text, // Same as original if translation failed
+            translatedText: transcript.text,
             timestamp: transcript.timestamp,
             isFinal: transcript.isFinal,
           };
 
           setSubtitles((prev) => {
             const exists = prev.some((s) => s.id === subtitleItem.id);
-            if (exists) {
-              return prev.map((s) =>
-                s.id === subtitleItem.id ? subtitleItem : s
-              );
-            } else {
-              return [...prev, subtitleItem];
-            }
+            return exists
+              ? prev.map((s) => (s.id === subtitleItem.id ? subtitleItem : s))
+              : [...prev, subtitleItem];
           });
         }
       }
@@ -381,7 +358,6 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
 
           // Don't process our own messages from the data channel
           if (senderId === localParticipant?.identity) {
-            console.log("Ignoring our own message received from data channel");
             return;
           }
 
@@ -392,7 +368,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
           const transcript: TranscriptMessage = {
             id: data.id,
             senderId: senderId,
-            senderName: senderName, // Use remote participant's actual name
+            senderName: senderName,
             senderLanguage: data.language || "unknown",
             text: data.text,
             isFinal: data.isFinal,
@@ -411,7 +387,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
     // Add event listener for all data types
     const dataReceivedHandler = (
       payload: Uint8Array,
-      participant?: any,
+      participant: Participant | undefined,
       kind?: DataPacket_Kind,
       topic?: string
     ) => {
@@ -433,7 +409,12 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
     return () => {
       room.off(RoomEvent.DataReceived, dataReceivedHandler);
     };
-  }, [room, participants, handleTranscriptReceived]);
+  }, [
+    room,
+    participants,
+    handleTranscriptReceived,
+    localParticipant?.identity,
+  ]);
 
   // Toggle speech recognition
   const toggleSpeechRecognition = useCallback(() => {
@@ -576,7 +557,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
               onLanguageChange={handleLanguageChange}
             />
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-              Subtitles will be translated to this language. You'll always
+              Subtitles will be translated to this language. You&apos;ll always
               receive translations from other speakers, even if your microphone
               is off.
             </p>
@@ -642,69 +623,64 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
               Test Translation
             </label>
             <div className="flex gap-2">
+              {" "}
               <input
                 type="text"
                 placeholder="Type a test message"
-                className="flex-1 p-1 text-sm border rounded"
+                className="flex-1 p-1 text-sm border rounded dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && e.currentTarget.value.trim()) {
-                    if (localParticipant && room) {
-                      // Create test transcript for sending to others
-                      const testTranscript: TranscriptMessage = {
-                        id: uuidv4(),
-                        senderId: localParticipant.identity,
-                        senderName: localParticipant.name || "You",
-                        senderLanguage: preferredLanguage,
-                        text: e.currentTarget.value.trim(),
-                        isFinal: true,
-                        timestamp: new Date(),
-                      };
-
-                      // Send to other participants
-                      sendTranscriptToParticipants(testTranscript);
-
-                      // Create a local version for display with "You" as sender
-                      const localTestTranscript: TranscriptMessage = {
-                        ...testTranscript,
-                        senderName: "You", // Always "You" for local display
-                      };
-
-                      // Process locally
-                      handleTranscriptReceived(localTestTranscript);
-                      e.currentTarget.value = "";
-                    }
-                  }
-                }}
-              />
-              <button
-                className="bg-blue-500 text-white px-2 py-1 rounded text-sm"
-                onClick={() => {
-                  const input = document.querySelector(
-                    'input[type="text"]'
-                  ) as HTMLInputElement;
-                  if (input && input.value.trim() && localParticipant && room) {
-                    // Create test transcript for sending to others
+                  const inputValue = e.currentTarget.value.trim();
+                  if (
+                    e.key === "Enter" &&
+                    inputValue &&
+                    localParticipant &&
+                    room
+                  ) {
                     const testTranscript: TranscriptMessage = {
                       id: uuidv4(),
                       senderId: localParticipant.identity,
                       senderName: localParticipant.name || "You",
                       senderLanguage: preferredLanguage,
-                      text: input.value.trim(),
+                      text: inputValue,
                       isFinal: true,
                       timestamp: new Date(),
                     };
 
-                    // Send to other participants
                     sendTranscriptToParticipants(testTranscript);
-
-                    // Create a local version for display with "You" as sender
-                    const localTestTranscript: TranscriptMessage = {
+                    handleTranscriptReceived({
                       ...testTranscript,
-                      senderName: "You", // Always "You" for local display
+                      senderName: "You",
+                    });
+
+                    e.currentTarget.value = "";
+                  }
+                }}
+              />
+              <button
+                className="bg-blue-500 text-white px-2 py-1 rounded text-sm hover:bg-blue-600 transition-colors"
+                onClick={() => {
+                  const input = document.querySelector(
+                    'input[type="text"]'
+                  ) as HTMLInputElement;
+                  const inputValue = input?.value.trim();
+
+                  if (inputValue && localParticipant && room) {
+                    const testTranscript: TranscriptMessage = {
+                      id: uuidv4(),
+                      senderId: localParticipant.identity,
+                      senderName: localParticipant.name || "You",
+                      senderLanguage: preferredLanguage,
+                      text: inputValue,
+                      isFinal: true,
+                      timestamp: new Date(),
                     };
 
-                    // Process locally
-                    handleTranscriptReceived(localTestTranscript);
+                    sendTranscriptToParticipants(testTranscript);
+                    handleTranscriptReceived({
+                      ...testTranscript,
+                      senderName: "You",
+                    });
+
                     input.value = "";
                   }
                 }}
