@@ -1,9 +1,30 @@
+// Add WebKit types
+interface WebkitSpeechRecognition {
+  new (): SpeechRecognition;
+}
+
+interface WebkitWindow extends Window {
+  webkitSpeechRecognition: WebkitSpeechRecognition;
+}
+
+interface SpeechRecognitionError extends Event {
+  error:
+    | "no-speech"
+    | "aborted"
+    | "audio-capture"
+    | "network"
+    | "not-allowed"
+    | "service-not-allowed"
+    | "bad-grammar"
+    | "language-not-supported";
+}
+
 interface SpeechRecognitionOptions {
   language: string;
   continuous: boolean;
   interimResults: boolean;
   onResult: (transcript: string, isFinal: boolean) => void;
-  onError: (error: any) => void;
+  onError: (error: string) => void;
 }
 
 class SpeechRecognitionService {
@@ -38,57 +59,60 @@ class SpeechRecognitionService {
     }
 
     try {
-      const SpeechRecognitionAPI =
-        window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const SpeechRecognitionAPI: typeof SpeechRecognition =
+        window.SpeechRecognition ||
+        (window as unknown as WebkitWindow).webkitSpeechRecognition;
       this.recognition = new SpeechRecognitionAPI();
 
-      this.recognition.lang = this.options.language;
-      this.recognition.continuous = this.options.continuous;
-      this.recognition.interimResults = this.options.interimResults;
+      if (this.recognition) {
+        this.recognition.lang = this.options.language;
+        this.recognition.continuous = this.options.continuous;
+        this.recognition.interimResults = this.options.interimResults;
 
-      this.recognition.onresult = (event: SpeechRecognitionEvent) => {
-        try {
-          const transcript = Array.from(event.results)
-            .map((result) => result[0].transcript)
-            .join("");
+        this.recognition.onresult = (event: SpeechRecognitionEvent) => {
+          try {
+            const transcript = Array.from(event.results)
+              .map((result) => result[0].transcript)
+              .join("");
 
-          const isFinal = event.results[event.results.length - 1].isFinal;
-          this.options.onResult(transcript, isFinal);
-        } catch (error) {
-          console.error("Error processing speech result:", error);
-        }
-      };
+            const isFinal = event.results[event.results.length - 1].isFinal;
+            this.options.onResult(transcript, isFinal);
+          } catch (error) {
+            console.error("Error processing speech result:", error);
+          }
+        };
 
-      this.recognition.onerror = (event: any) => {
-        console.error("Speech recognition error:", event.error);
-        this.options.onError(event.error);
+        this.recognition.onerror = (event: SpeechRecognitionError) => {
+          console.error("Speech recognition error:", event.error);
+          this.options.onError(event.error);
 
-        // Mark as not listening on error
-        this.isListening = false;
+          // Mark as not listening on error
+          this.isListening = false;
 
-        // Restart if error is not fatal and we should still be listening
-        if (
-          event.error !== "no-speech" &&
-          event.error !== "aborted" &&
-          this.isListening
-        ) {
-          setTimeout(() => {
-            this.safeStart();
-          }, 1000);
-        }
-      };
+          // Restart if error is not fatal and we should still be listening
+          if (
+            event.error !== "no-speech" &&
+            event.error !== "aborted" &&
+            this.isListening
+          ) {
+            setTimeout(() => {
+              this.safeStart();
+            }, 1000);
+          }
+        };
 
-      this.recognition.onend = () => {
-        // Reset start attempts when recognition ends normally
-        this.startAttempts = 0;
+        this.recognition.onend = () => {
+          // Reset start attempts when recognition ends normally
+          this.startAttempts = 0;
 
-        // Only restart if we're still supposed to be listening
-        if (this.isListening) {
-          setTimeout(() => {
-            this.safeStart();
-          }, 300);
-        }
-      };
+          // Only restart if we're still supposed to be listening
+          if (this.isListening) {
+            setTimeout(() => {
+              this.safeStart();
+            }, 300);
+          }
+        };
+      }
 
       this.initialized = true;
     } catch (error) {

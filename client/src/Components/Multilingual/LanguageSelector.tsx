@@ -100,7 +100,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           <div className="p-2">
             <input
               type="text"
-              className="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className=" text-black block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
               placeholder="Search languages..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
