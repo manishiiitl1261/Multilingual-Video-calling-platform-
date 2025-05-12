@@ -106,6 +106,10 @@ import {
 import "@livekit/components-styles";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
+import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
+
+// Import the MultilingualSupport component
+import MultilingualSupport from "../../Components/Multilingual";
 
 interface User {
   id: string;
@@ -1364,6 +1368,9 @@ export default function Room() {
 
             {/* Connection state toast */}
             <ConnectionStateToast />
+
+            {/* Add Multilingual Support Component */}
+            <RoomWrapper />
           </LiveKitRoom>
         </GlobalErrorBoundary>
       </div>
@@ -1647,4 +1654,35 @@ class ErrorBoundary extends React.Component<
 
     return this.props.children;
   }
+}
+
+// New component to access Room context within the LiveKitRoom
+function RoomWrapper() {
+  const room = useRoomContext();
+  const { localParticipant } = useLocalParticipant();
+  const participants = useMemo(() => {
+    if (!room) return [];
+    // Access the remoteParticipants Map and convert to array
+    const remoteParticipants = Array.from(room.remoteParticipants.values());
+    // Add the local participant if available
+    return localParticipant
+      ? [...remoteParticipants, localParticipant]
+      : remoteParticipants;
+  }, [room, localParticipant]);
+
+  return (
+    <ReactErrorBoundary
+      fallbackRender={({ error }) => (
+        <div className="text-xs text-red-600 bg-red-100 p-2 m-2 rounded">
+          Multilingual support error: {error.message}
+        </div>
+      )}
+    >
+      <MultilingualSupport
+        room={room}
+        localParticipant={localParticipant}
+        participants={participants}
+      />
+    </ReactErrorBoundary>
+  );
 }
