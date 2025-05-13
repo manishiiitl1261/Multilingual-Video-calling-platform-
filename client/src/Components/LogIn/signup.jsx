@@ -76,7 +76,7 @@ const SignUp = () => {
       setIsOtpVerification(true);
       setOtpFormData(prev => ({ ...prev, email }));
       setVerificationTimestamp(Date.now());
-      
+
       // Check if email was sent successfully
       if (response.emailSent) {
         setSuccess("Registration successful! Please check your email for verification OTP.");
@@ -85,7 +85,7 @@ const SignUp = () => {
         setFallbackOtp(response.otp);
         setSuccess("Email delivery failed. Please use the OTP displayed below:");
       }
-      
+
       // Enable resend cooldown
       setResendDisabled(true);
       setCountdown(60);
@@ -98,12 +98,12 @@ const SignUp = () => {
 
   const handleResendOTP = async () => {
     if (resendDisabled) return;
-    
+
     setError("");
     setSuccess("");
     setFallbackOtp("");
     setIsLoading(true);
-    
+
     try {
       // Re-register with the same details to get a new OTP
       const response = await register({
@@ -111,14 +111,14 @@ const SignUp = () => {
         email: otpFormData.email,
         password: formData.password,
       });
-      
+
       if (response.emailSent) {
         setSuccess("A new OTP has been sent to your email.");
       } else {
         setFallbackOtp(response.otp);
         setSuccess("Email delivery failed. Please use the new OTP displayed below:");
       }
-      
+
       // Enable resend cooldown
       setResendDisabled(true);
       setCountdown(60);
@@ -134,7 +134,7 @@ const SignUp = () => {
     setError("");
     setSuccess("");
     setIsLoading(true);
-    
+
     try {
       const { email, otp } = otpFormData;
 
@@ -147,13 +147,13 @@ const SignUp = () => {
 
       // Verify OTP API call
       const response = await verifyOTP(email, otp);
-      
+
       // Save user data and token
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
-      
+
       setSuccess("Verification successful! Redirecting to home page...");
-      
+
       // Redirect to home page directly
       setTimeout(() => {
         router.push("/");
@@ -168,7 +168,6 @@ const SignUp = () => {
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-center bg-cover"
-      style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}
     >
       <div className="w-full max-w-md p-8 bg-white shadow-xl bg-opacity-90 rounded-2xl">
         <h2 className="mb-6 text-2xl font-semibold text-center text-blue-800">
@@ -177,7 +176,7 @@ const SignUp = () => {
 
         {error && <div className="mb-4 text-sm text-red-500">{error}</div>}
         {success && <div className="mb-4 text-sm text-green-500">{success}</div>}
-        
+
         {fallbackOtp && (
           <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
             <p className="text-yellow-800 font-medium">Your OTP: <span className="font-bold">{fallbackOtp}</span></p>
@@ -212,8 +211,8 @@ const SignUp = () => {
                   disabled={resendDisabled}
                   className={`text-xs ${resendDisabled ? 'text-gray-400 cursor-not-allowed' : 'text-blue-500 hover:underline'}`}
                 >
-                  {resendDisabled 
-                    ? `Resend in ${countdown}s` 
+                  {resendDisabled
+                    ? `Resend in ${countdown}s`
                     : 'Resend OTP'}
                 </button>
               </div>
@@ -222,11 +221,10 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full px-4 py-2 font-semibold text-white transition duration-200 rounded-xl ${
-                isLoading
+              className={`w-full px-4 py-2 font-semibold text-white transition duration-200 rounded-xl ${isLoading
                   ? "bg-blue-400 cursor-not-allowed"
                   : "bg-blue-600 hover:bg-blue-700"
-              }`}
+                }`}
             >
               {isLoading ? "Verifying..." : "Verify OTP"}
             </button>
@@ -305,11 +303,10 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full px-4 py-2 font-semibold text-white transition duration-200 rounded-xl ${
-                isLoading
+              className={`w-full px-4 py-2 font-semibold text-white transition duration-200 rounded-xl ${isLoading
                   ? "bg-blue-400 cursor-not-allowed"
                   : "bg-blue-600 hover:bg-blue-700"
-              }`}
+                }`}
             >
               {isLoading ? "Signing Up..." : "Sign Up"}
             </button>

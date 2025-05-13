@@ -484,43 +484,18 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
       <div className="absolute z-20 flex flex-col gap-2 right-4 bottom-20">
         <button
           onClick={() => setShowLanguageSettings(!showLanguageSettings)}
-          className="flex items-center justify-center p-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700"
+          className="flex items-center justify-center p-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 cursor-pointer"
           title="Language settings"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 8l6 6M9 8l6 6M4 14h2M10 4v4M12 4v4M14 14h6M16 18h4" />
-          </svg>
+          Setting
         </button>
 
         <button
           onClick={() => setDebugMode(!debugMode)}
-          className="flex items-center justify-center p-2 text-white bg-gray-600 rounded-full shadow-lg hover:bg-gray-700"
+          className="flex items-center justify-center p-2 text-white bg-gray-600 rounded-full shadow-lg hover:bg-gray-700 cursor-pointer px-4"
           title="Toggle debug mode"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 22C18.0751 22 23 17.0751 23 11C23 4.92487 18.0751 0 12 0C5.92487 0 1 4.92487 1 11C1 17.0751 5.92487 22 12 22Z" />
-            <path d="M12 16.5V16.6M12 5.5C10.4087 5.5 9.1875 6.72183 9.1875 8.3125C9.1875 9.90317 10.4087 11.125 12 11.125C13.5913 11.125 14.8125 9.90317 14.8125 8.3125C14.8125 6.72183 13.5913 5.5 12 5.5Z" />
-          </svg>
+          Debug
         </button>
       </div>
 
@@ -618,7 +593,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
           )}
 
           {/* Test message feature */}
-          <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+          {/* <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
             <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
               Test Translation
             </label>
@@ -691,8 +666,8 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Use this to test translations when speech recognition is not
               working
-            </p>
-          </div>
+            </p> 
+          {/* </div> */}
         </div>
       )}
     </>

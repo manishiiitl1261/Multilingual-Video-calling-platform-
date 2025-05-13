@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 // Preemptive error suppression for LiveKit (needs to run immediately)
@@ -81,30 +83,15 @@ import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/router";
 import {
   LiveKitRoom,
-  GridLayout,
   RoomAudioRenderer,
-  ControlBar,
   VideoConference,
   LayoutContextProvider,
   ConnectionStateToast,
-  TrackToggle,
-  MediaDeviceMenu,
-  StartAudio,
-  Chat,
   useRoomContext,
   useLocalParticipant,
-  useDataChannel,
-  useChat,
 } from "@livekit/components-react";
-import {
-  Track,
-  Room as RoomType,
-  RoomEvent,
-  DisconnectReason,
-  DataPacket_Kind,
-} from "livekit-client";
+import { Room as RoomType, RoomEvent, DisconnectReason } from "livekit-client";
 import "@livekit/components-styles";
-import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 
@@ -128,18 +115,15 @@ export default function Room() {
   const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
   const [roomLink, setRoomLink] = useState("");
   const isHost = host === "true";
-  const [isChatVisible, setIsChatVisible] = useState(false);
   const [showInviteCard, setShowInviteCard] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [notification, setNotification] = useState<{
     message: string;
     type: "success" | "warning" | "error";
   } | null>(null);
-  const [showShortcutsModal, setShowShortcutsModal] = useState(false);
 
   // Reference to help focus the chat input when opened
   const chatInputRef = useRef<HTMLInputElement>(null);
-
   // Reference for the invite card
   const inviteCardRef = useRef<HTMLDivElement>(null);
   const inviteButtonRef = useRef<HTMLButtonElement>(null);
@@ -153,7 +137,6 @@ export default function Room() {
   // Responsive design variables
   const [isMobile, setIsMobile] = useState(false);
   const [isSmallDevice, setIsSmallDevice] = useState(false);
-
   // Flag to track if disconnection is in progress
   const [isDisconnecting, setIsDisconnecting] = useState(false);
 
@@ -382,6 +365,7 @@ export default function Room() {
     if (typeof window.AbortController !== "undefined") {
       const controller = new AbortController();
       const signal = controller.signal;
+      console.log(signal);
       controller.abort(); // Abort any pending LiveKit fetch requests
     }
 
