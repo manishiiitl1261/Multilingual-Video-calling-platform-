@@ -1,4 +1,4 @@
-import SignUp from "@/Components/Login/signup";
+import SignUp from "@/Components/LogIn/signup";
 import Navbar from "@/Components/Navbar/Navbar";
 import Footer from "@/Components/Footer/Footer";
 export default function Home() {
