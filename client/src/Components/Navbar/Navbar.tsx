@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import Link from "next/link";
@@ -33,26 +35,29 @@ export default function Navbar() {
   // Add click outside handler for dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     };
-    
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   // Check if user is logged in
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error('Error parsing user data', error);
-        localStorage.removeItem('user');
+        console.error("Error parsing user data", error);
+        localStorage.removeItem("user");
       }
     }
   }, []);
@@ -74,12 +79,12 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
     setDropdownOpen(false);
     // Redirect to home page
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   return (
@@ -106,7 +111,7 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
-            
+
             {user ? (
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -115,7 +120,8 @@ export default function Navbar() {
                   aria-label="User menu"
                 >
                   <div className="relative w-8 h-8 rounded-full overflow-hidden border border-purple-400">
-                    {user.profilePicture && user.profilePicture !== 'default' ? (
+                    {user.profilePicture &&
+                    user.profilePicture !== "default" ? (
                       <Image
                         src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${user.profilePicture}`}
                         alt={user.name}
@@ -136,7 +142,7 @@ export default function Navbar() {
                     )}
                   </div>
                 </button>
-                
+
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                     <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
@@ -165,7 +171,7 @@ export default function Navbar() {
               <Link
                 href="/Login"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                  isActive('/Login')
+                  isActive("/Login")
                     ? "bg-purple-700 text-white border border-purple-400"
                     : "text-white hover:bg-purple-700/50 hover:text-white hover:border hover:border-purple-400"
                 }`}
@@ -205,12 +211,13 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
-            
+
             {user ? (
               <>
                 <div className="flex items-center space-x-3 px-4 py-3 border-t border-gray-700 text-white">
                   <div className="relative w-8 h-8 rounded-full overflow-hidden border border-purple-400">
-                    {user.profilePicture && user.profilePicture !== 'default' ? (
+                    {user.profilePicture &&
+                    user.profilePicture !== "default" ? (
                       <Image
                         src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${user.profilePicture}`}
                         alt={user.name}
@@ -254,7 +261,7 @@ export default function Navbar() {
               <Link
                 href="/Login"
                 className={`block px-4 py-3 rounded-md text-base font-medium transition-all duration-300 my-1 ${
-                  isActive('/Login')
+                  isActive("/Login")
                     ? "bg-purple-700 text-white border border-purple-400"
                     : "text-white hover:bg-purple-700/50 hover:text-white hover:border hover:border-purple-400"
                 }`}
