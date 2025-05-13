@@ -32,14 +32,14 @@ const LoginPage = () => {
     }
   }, [countdown, resendDisabled]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleOtpChange = (e) => {
+  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtpFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -50,13 +50,13 @@ const LoginPage = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     setFallbackOtp("");
     setIsLoading(true);
-    
+
     try {
       const { email, password } = formData;
 
@@ -69,21 +69,25 @@ const LoginPage = () => {
 
       // Login API call
       const response = await login({ email, password });
-      
+
       if (response.requiresVerification) {
         // Set OTP verification mode
         setIsOtpVerification(true);
-        setOtpFormData(prev => ({ ...prev, email }));
-        
+        setOtpFormData((prev) => ({ ...prev, email }));
+
         // Check if email was sent successfully
         if (response.emailSent) {
-          setSuccess("Please verify your email with the OTP sent to your email address.");
+          setSuccess(
+            "Please verify your email with the OTP sent to your email address."
+          );
         } else {
           // If email failed, show OTP directly on screen
           setFallbackOtp(response.otp);
-          setSuccess("Email delivery failed. Please use the OTP displayed below:");
+          setSuccess(
+            "Email delivery failed. Please use the OTP displayed below:"
+          );
         }
-        
+
         // Enable resend cooldown
         setResendDisabled(true);
         setCountdown(60);
@@ -91,16 +95,20 @@ const LoginPage = () => {
         // Save user data and token
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response.user));
-        
+
         setSuccess("Login successful! Redirecting...");
-        
+
         // Redirect to home page
         setTimeout(() => {
           router.push("/");
         }, 1500);
       }
     } catch (error) {
-      setError(error.message || "Login failed. Please try again.");
+      if (error instanceof Error) {
+        setError(error.message || "Login failed. Please try again.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -108,39 +116,45 @@ const LoginPage = () => {
 
   const handleResendOTP = async () => {
     if (resendDisabled) return;
-    
+
     setError("");
     setSuccess("");
     setFallbackOtp("");
     setIsLoading(true);
-    
+
     try {
       // Request a new OTP
       const response = await sendLoginOTP(otpFormData.email);
-      
+
       if (response.emailSent) {
         setSuccess("A new OTP has been sent to your email.");
       } else {
         setFallbackOtp(response.otp);
-        setSuccess("Email delivery failed. Please use the new OTP displayed below:");
+        setSuccess(
+          "Email delivery failed. Please use the new OTP displayed below:"
+        );
       }
-      
+
       // Enable resend cooldown
       setResendDisabled(true);
       setCountdown(60);
     } catch (error) {
-      setError(error.message || "Failed to resend OTP. Please try again.");
+      if (error instanceof Error) {
+        setError(error.message || "Failed to resend OTP. Please try again.");
+      } else {
+        setError("Failed to resend OTP. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleOtpSubmit = async (e) => {
+  const handleOtpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     setIsLoading(true);
-    
+
     try {
       const { email, otp } = otpFormData;
 
@@ -153,19 +167,23 @@ const LoginPage = () => {
 
       // Verify OTP API call
       const response = await verifyOTP(email, otp);
-      
+
       // Save user data and token
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
-      
+
       setSuccess("Verification successful! Redirecting to home page...");
-      
+
       // Redirect to home page
       setTimeout(() => {
         router.push("/");
       }, 1500);
     } catch (error) {
-      setError(error.message || "Verification failed. Please try again.");
+      if (error instanceof Error) {
+        setError(error.message || "Verification failed. Please try again.");
+      } else {
+        setError("Verification failed. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -188,11 +206,15 @@ const LoginPage = () => {
             {success}
           </div>
         )}
-        
+
         {fallbackOtp && (
           <div className="px-4 py-2 mb-4 text-yellow-800 bg-yellow-100 rounded">
-            <p className="font-medium">Your OTP: <span className="font-bold">{fallbackOtp}</span></p>
-            <p className="text-xs text-yellow-700 mt-1">This is only displayed because the email delivery failed.</p>
+            <p className="font-medium">
+              Your OTP: <span className="font-bold">{fallbackOtp}</span>
+            </p>
+            <p className="text-xs text-yellow-700 mt-1">
+              This is only displayed because the email delivery failed.
+            </p>
           </div>
         )}
 
@@ -218,17 +240,19 @@ const LoginPage = () => {
               />
               <div className="flex justify-between mt-2">
                 <p className="text-xs text-gray-500">
-                  Didn't receive the OTP?
+                  Didn&apos;t receive the OTP?
                 </p>
                 <button
                   type="button"
                   onClick={handleResendOTP}
                   disabled={resendDisabled}
-                  className={`text-xs ${resendDisabled ? 'text-gray-400 cursor-not-allowed' : 'text-blue-500 hover:underline'}`}
+                  className={`text-xs ${
+                    resendDisabled
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "text-blue-500 hover:underline"
+                  }`}
                 >
-                  {resendDisabled 
-                    ? `Resend in ${countdown}s` 
-                    : 'Resend OTP'}
+                  {resendDisabled ? `Resend in ${countdown}s` : "Resend OTP"}
                 </button>
               </div>
             </div>
@@ -292,7 +316,10 @@ const LoginPage = () => {
                 </button>
               </div>
               <div className="mt-1 text-right">
-                <Link href="/forgot-password" className="text-sm text-blue-500 hover:underline">
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-blue-500 hover:underline"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -313,10 +340,10 @@ const LoginPage = () => {
         )}
 
         <p className="mt-4 text-sm text-center text-gray-600">
-          Don't have an account?{" "}
-          <a href="/SignUp" className="text-blue-500 hover:underline">
+          Don&apos;t have an account?{" "}
+          <link href="/SignUp" className="text-blue-500 hover:underline">
             Register
-          </a>
+          </link>
         </p>
       </div>
     </div>
