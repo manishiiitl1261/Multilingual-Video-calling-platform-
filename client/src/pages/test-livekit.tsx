@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect } from "react";
-import { Room, RoomOptions, connect, LocalParticipant } from "livekit-client";
-
+import { Room, RoomOptions, LocalParticipant } from "livekit-client";
+import { RoomEvent, ConnectionState } from "livekit-client";
 export default function TestLiveKit() {
   const [status, setStatus] = useState<string>("Not connected");
   const [error, setError] = useState<string | null>(null);
@@ -81,8 +83,12 @@ export default function TestLiveKit() {
       // First get a token if we don't have one
       let tokenToUse = token;
       if (!tokenToUse) {
-        tokenToUse = await fetchTestToken();
-        if (!tokenToUse) return;
+        const fetchedToken = await fetchTestToken();
+        if (fetchedToken) {
+          tokenToUse = fetchedToken;
+        } else {
+          throw new Error("Failed to fetch a valid token");
+        }
       }
 
       setStatus("Connecting...");
@@ -130,11 +136,15 @@ export default function TestLiveKit() {
         setParticipant(newRoom.localParticipant);
       });
 
-      // Add error listener
-      newRoom.on("error", (error) => {
-        console.error("Room error:", error);
-        setError(`LiveKit error: ${error.message}`);
-      });
+      newRoom.on(
+        RoomEvent.ConnectionStateChanged,
+        (newState: ConnectionState) => {
+          console.log("Connection state changed to", newState);
+          if (newState === ConnectionState.Disconnected) {
+            setError("LiveKit connection failed");
+          }
+        }
+      );
 
       await newRoom.connect(url, tokenToUse);
       console.log("Room connect method called");
