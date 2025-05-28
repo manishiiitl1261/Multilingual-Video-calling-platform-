@@ -42,20 +42,16 @@ export default function Services() {
       <h1 className="mb-6 text-4xl font-bold text-white">
         Multilingual Meeting Services
       </h1>
-      <p className="mb-10 text-lg text-white">
-        Seamlessly connect with people worldwide with real-time translations,
-        transcriptions, and automated meeting summaries.
-      </p>
       <div className="grid max-w-6xl gap-6 mx-auto md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => (
           <Card
             key={index}
-            className="p-6 bg-gradient-to-b from-black to-transparent backdrop-blur-xl  shadow-md rounded-2xl cursor-pointer hover:scale-105 transform duration-300 hover:shadow-lg hover:border-2 hover:border-purple-800 hover:border-opacity-50"
+            className="p-6 backdrop-blur-md bg-black/10  border-cyan-600  shadow-md rounded-xl cursor-pointer hover:scale-105 transform duration-300 hover:shadow-lg border-2 hover:border-purple-800 hover:border-opacity-50"
           >
             <CardContent>
               <div className="flex items-center mb-4 space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500" />
-                <h2 className="text-xl font-semibold text-white">
+                <h2 className="text-lg lg:text-xl font-semibold text-white">
                   {service.title}
                 </h2>
               </div>

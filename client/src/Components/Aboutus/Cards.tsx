@@ -12,7 +12,7 @@ interface CardProps {
 export default function Card({ icon, title, description }: CardProps) {
   return (
     <motion.div
-      className="backdrop-blur-md border-2 border-cyan-600 rounded-xl p-6 text-white hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:border-purple-600 h-full flex flex-col justify-between min-h-[250px] opacity-100 overflow-hidden"
+      className="backdrop-blur-md bg-black/10 border-2 border-cyan-600 rounded-xl p-6 text-white hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:border-purple-600 h-full flex flex-col justify-between min-h-[250px] opacity-100 overflow-hidden"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, y: 50 }}
