@@ -1,8 +1,7 @@
 import Navbar from "@/Components/Navbar/Navbar";
-
-import ItemsContainer from "@/Components/ContactUs/ItemContainer";
 import Member from "@/Components/ContactUs/Member";
 import Contact from "@/Components/ContactUs/Contact";
+import Footer from "@/Components/Footer/Footer";
 export default function Home() {
   return (
     <>
@@ -11,7 +10,7 @@ export default function Home() {
         <Contact />
         <Member />
       </main>
-      <ItemsContainer />
+      <Footer />
     </>
   );
 }
