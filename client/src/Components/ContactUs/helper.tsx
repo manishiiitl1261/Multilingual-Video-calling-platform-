@@ -2,7 +2,7 @@ const TeamMember = [
   {
     imagePath: "/assest/Manish.jpeg",
     name: "Manish Rawat",
-    title: <span style={{ color: "white" }}>Frontend-Developer</span>,
+    title: <span style={{ color: "white" }}>Full Stack Developer</span>,
     description: "Passionate about building amazing UIs.",
     twitter: "https://twitter.com/alice",
     github: "https://github.com/manishiiitl1261",
@@ -12,7 +12,7 @@ const TeamMember = [
   {
     imagePath: "/assest/Manjeet1.jpeg",
     name: "Manjeet Kumar",
-    title: <span style={{ color: "white" }}>Backend-Developer</span>,
+    title: <span style={{ color: "white" }}>Full Stack Developer</span>,
     description: "Loves scalable and efficient APIs.",
     twitter: "https://twitter.com/bob",
     github: "https://github.com/manjeetkumar29",
@@ -32,7 +32,7 @@ const TeamMember = [
   {
     imagePath: "/assest/Manjeet1.jpeg",
     name: "Manjeet Kumar",
-    title: <span style={{ color: "white" }}>Backend-Developer</span>,
+    title: <span style={{ color: "white" }}>Full Stack Developer</span>,
     description: "Loves scalable and efficient APIs.",
     twitter: "https://twitter.com/bob",
     github: "https://github.com/manjeetkumar29",
@@ -52,7 +52,7 @@ const TeamMember = [
   {
     imagePath: "/assest/Manish.jpeg",
     name: "Manish Rawat",
-    title: <span style={{ color: "white" }}>Frontend-Developer</span>,
+    title: <span style={{ color: "white" }}>Full Stack Developer</span>,
     description: "Passionate about building amazing UIs.",
     twitter: "https://twitter.com/alice",
     github: "https://github.com/manishiiitl1261",
