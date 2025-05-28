@@ -25,7 +25,7 @@ export default function TeamCard({
 }: TeamCardProps) {
   return (
     <motion.div
-      className="backdrop-blur-md border-2 border-cyan-600 rounded-xl p-6 text-white hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:border-purple-600 h-full flex flex-col justify-between min-h-[370px] text-center overflow-hidden"
+      className="backdrop-blur-md  border-2 border-cyan-600 rounded-xl p-6 text-white hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:border-purple-600 h-full flex flex-col justify-between min-h-[370px] text-center overflow-hidden"
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
     >
