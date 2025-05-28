@@ -60,29 +60,50 @@ const Subtitles: React.FC<SubtitlesProps> = ({
   }, [visibleSubtitles]);
 
   // Time-based cleanup - remove subtitles after 10 seconds
+  // useEffect(() => {
+  //   const now = new Date();
+  //   const timeoutIds = visibleSubtitles
+  //     .map((subtitle) => {
+  //       const age = now.getTime() - new Date(subtitle.timestamp).getTime();
+  //       const timeLeft = Math.max(10000 - age, 0); // 10 seconds max display time
+
+  //       if (!subtitle.isFinal && timeLeft > 0) {
+  //         return setTimeout(() => {
+  //           setVisibleSubtitles((current) =>
+  //             current.filter((s) => s.id !== subtitle.id)
+  //           );
+  //         }, timeLeft);
+  //       }
+  //       return null;
+  //     })
+  //     .filter(Boolean);
+
+  //   return () => {
+  //     timeoutIds.forEach((id) => id && clearTimeout(id));
+  //   };
+  // }, [visibleSubtitles]);
+
+  // -------------------------
   useEffect(() => {
     const now = new Date();
-    const timeoutIds = visibleSubtitles
-      .map((subtitle) => {
-        const age = now.getTime() - new Date(subtitle.timestamp).getTime();
-        const timeLeft = Math.max(10000 - age, 0); // 10 seconds max display time
 
-        if (subtitle.isFinal && timeLeft > 0) {
-          return setTimeout(() => {
-            setVisibleSubtitles((current) =>
-              current.filter((s) => s.id !== subtitle.id)
-            );
-          }, timeLeft);
-        }
-        return null;
-      })
-      .filter(Boolean);
+    const timeoutIds = visibleSubtitles.map((subtitle) => {
+      const age = now.getTime() - new Date(subtitle.timestamp).getTime();
+      const timeLeft = Math.max(10000 - age, 0); // 10-second display max
 
+      // Remove every subtitle after 10 seconds
+      return setTimeout(() => {
+        setVisibleSubtitles((current) =>
+          current.filter((s) => s.id !== subtitle.id)
+        );
+      }, timeLeft);
+    });
+
+    // Cleanup on unmount or subtitle change
     return () => {
-      timeoutIds.forEach((id) => id && clearTimeout(id));
+      timeoutIds.forEach((id) => clearTimeout(id));
     };
   }, [visibleSubtitles]);
-
   if (visibleSubtitles.length === 0) {
     return null;
   }
@@ -101,8 +122,8 @@ const Subtitles: React.FC<SubtitlesProps> = ({
       <AnimatePresence>
         {visibleSubtitles.map((subtitle) => {
           // Determine if this is from the local user
-          const isLocalUser = subtitle.speakerName === "You";
-
+          const isLocalUser = true;
+          // subtitle.speakerName === "You";
           return (
             <motion.div
               key={subtitle.id}
@@ -111,7 +132,7 @@ const Subtitles: React.FC<SubtitlesProps> = ({
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{ duration: 0.3 }}
               className={`
-                bg-black bg-opacity-60 backdrop-blur-sm rounded-lg p-3 mb-2
+                bg-gray-600 bg-opacity-60 backdrop-blur-sm rounded-lg p-3 mb-2
                 text-white shadow-lg border border-gray-700 max-w-3xl mx-auto w-full
                 ${!subtitle.isFinal ? "border-l-4 border-l-blue-400" : ""}
                 ${isLocalUser ? "border-r-4 border-r-green-400" : ""}

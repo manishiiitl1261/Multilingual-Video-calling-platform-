@@ -1269,7 +1269,12 @@ export default function Room() {
             </div>
           )}
         </div>
-        <div className="flex flex-row gap-2 justify-center items-center">
+        <div className=" px-2">
+          <p className=" text-center text-red-600">
+            Mic off after speaking to avoid errors.
+          </p>
+        </div>
+        <div className="flex flex-row gap-2 justify-center items-center px-3">
           {isHost && (
             <span className="bg-green-600 text-white text-xs px-2 py-1 rounded">
               Host

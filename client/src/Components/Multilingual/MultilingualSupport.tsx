@@ -149,7 +149,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
 
           const subtitleItem: SubtitleItem = {
             id: transcript.id,
-            speakerName: transcript.senderName,
+            speakerName: transcript.senderId,
             speakerLanguage:
               ISO6391.getName(transcript.senderLanguage) ||
               transcript.senderLanguage,
@@ -169,7 +169,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
           console.error("Translation error:", error);
           const subtitleItem: SubtitleItem = {
             id: transcript.id,
-            speakerName: transcript.senderName,
+            speakerName: transcript.senderId,
             speakerLanguage:
               ISO6391.getName(transcript.senderLanguage) ||
               transcript.senderLanguage,
@@ -362,13 +362,10 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
           }
 
           // Process transcript even if sender not found
-          const senderName =
-            sender?.name || data.senderName || "Unknown participant";
-
           const transcript: TranscriptMessage = {
             id: data.id,
             senderId: senderId,
-            senderName: senderName,
+            senderName: senderId,
             senderLanguage: data.language || "unknown",
             text: data.text,
             isFinal: data.isFinal,
@@ -517,6 +514,7 @@ const MultilingualSupport: React.FC<MultilingualSupportProps> = ({
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                className=" cursor-pointer bg-blue-300 hover:bg-blue-500 text-white duration-300 rounded-md"
               >
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>

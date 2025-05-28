@@ -67,7 +67,7 @@ class TranslationService {
 
       const data = await response.json();
 
-      let translatedText = text;
+      let translatedText = "";
 
       if (data && data.responseData && data.responseData.translatedText) {
         translatedText = data.responseData.translatedText;
